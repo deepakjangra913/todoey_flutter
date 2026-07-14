@@ -2,21 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:todoey_flutter/models/Task.dart';
 import 'package:todoey_flutter/widgets/task_tile.dart';
 
-class TasksList extends StatefulWidget {
-  const TasksList({super.key});
+class TasksList extends StatelessWidget {
+  late List<Task> tasks;
+  void Function(bool, int) callback;
 
-  @override
-  State<TasksList> createState() => _TasksListState();
-}
-
-class _TasksListState extends State<TasksList> {
-  List<Task> tasks = [
-    Task(name: "Deepak"),
-    Task(name: "Deepak 1"),
-    Task(name: "Deepak 2"),
-    Task(name: "Deepak 3"),
-    Task(name: "Deepak 4"),
-  ];
+  TasksList({required this.tasks, required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +16,8 @@ class _TasksListState extends State<TasksList> {
           isChecked: tasks[index].isDone,
           taskTitle: tasks[index].name,
           checkboxCallback: (checkboxState) {
-            setState(() {
-              tasks[index].taskDone();
-            });
-          }
+            callback(checkboxState!, index);
+          },
         );
       },
       itemCount: tasks.length,

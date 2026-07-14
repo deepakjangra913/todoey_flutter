@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AddTaskScreen extends StatelessWidget {
+
+  final Function(String) callback;
+
+  AddTaskScreen({required this.callback});
+
   @override
   Widget build(BuildContext context) {
+
+    String enteredText = '';
     return Container(
       child: Center(
         child: Padding(
@@ -23,6 +30,9 @@ class AddTaskScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 autofocus: true,
                 cursorColor: Colors.lightBlueAccent,
+                onChanged: (value) {
+                  enteredText = value;
+                },
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.lightBlueAccent),
@@ -38,7 +48,9 @@ class AddTaskScreen extends StatelessWidget {
               Container(
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    callback(enteredText);
+                  },
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(0.0),
