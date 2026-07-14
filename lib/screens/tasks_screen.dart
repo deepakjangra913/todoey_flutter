@@ -22,13 +22,19 @@ class _TasksScreenState extends State<TasksScreen> {
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add, color: Colors.white),
         onPressed: () {
-          showModalBottomSheet(context: context, builder: (context) => AddTaskScreen(callback: (task) {
-            Navigator.pop(context);
-            setState(() {
-              Task newTask  = Task(name: task);
-              tasks.add(newTask);
-            });
-          },));
+          showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (context) => Container(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: AddTaskScreen(callback: (task) {
+                            Navigator.pop(context);
+                            setState(() {
+                Task newTask  = Task(name: task);
+                tasks.add(newTask);
+                            });
+                          },),
+              ));
         },
       ),
       body: Column(
