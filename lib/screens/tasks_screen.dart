@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
-
 import '../models/Task.dart';
 import '../widgets/tasks_list.dart';
 
+/*
+* Tasks screen where we're showing tasks list
+* User can add new task and also can mark the
+* existing task as done
+* */
 class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
 
