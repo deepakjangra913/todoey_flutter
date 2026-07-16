@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/*
+* This is a bottom sheet that we're using to
+* add new task
+* */
 class AddTaskScreen extends StatelessWidget {
 
   final Function(String) callback;
