@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/TaskData.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
+
 import '../models/Task.dart';
 import '../widgets/tasks_list.dart';
 
@@ -8,15 +11,8 @@ import '../widgets/tasks_list.dart';
 * User can add new task and also can mark the
 * existing task as done
 * */
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +23,20 @@ class _TasksScreenState extends State<TasksScreen> {
         child: Icon(Icons.add, color: Colors.white),
         onPressed: () {
           showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) => Container(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(callback: (task) {
-                            Navigator.pop(context);
-                            setState(() {
-                Task newTask  = Task(name: task);
-                tasks.add(newTask);
-                            });
-                          },),
-              ));
+            context: context,
+            isScrollControlled: true,
+            builder: (context) => Container(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: AddTaskScreen(
+                callback: (task) {
+                  Navigator.pop(context);
+                  context.read<TaskData>().addDataIntoList(Task(name: task));
+                },
+              ),
+            ),
+          );
         },
       ),
       body: Column(
@@ -76,7 +74,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 ),
 
                 Text(
-                  '${tasks.length} Tasks',
+                  '${context.watch<TaskData>().tasks.length} Tasks',
                   style: TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],
@@ -92,11 +90,12 @@ class _TasksScreenState extends State<TasksScreen> {
                   topLeft: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(tasks: tasks, callback: (checkboxState, index){
-                setState(() {
-                  tasks[index].taskDone();
-                });
-              }),
+              child: TasksList(
+                tasks: Provider.of<TaskData>(context).tasks,
+                callback: (checkboxState, index) {
+                  context.read<TaskData>().markTaskAsDone(index);
+                },
+              ),
             ),
           ),
         ],
