@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/models/Task.dart';
+import 'package:todoey_flutter/models/TaskData.dart';
 
 /*
 * This is a bottom sheet that we're using to
 * add new task
 * */
 class AddTaskScreen extends StatelessWidget {
-
-  final Function(String) callback;
-
-  AddTaskScreen({required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,8 @@ class AddTaskScreen extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  callback(enteredText);
+                  context.read<TaskData>().addTask(enteredText);
+                  Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(

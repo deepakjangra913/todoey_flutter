@@ -29,12 +29,7 @@ class TasksScreen extends StatelessWidget {
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
-              child: AddTaskScreen(
-                callback: (task) {
-                  Navigator.pop(context);
-                  context.read<TaskData>().addDataIntoList(Task(name: task));
-                },
-              ),
+              child: AddTaskScreen(),
             ),
           );
         },
@@ -74,7 +69,7 @@ class TasksScreen extends StatelessWidget {
                 ),
 
                 Text(
-                  '${context.watch<TaskData>().tasks.length} Tasks',
+                  '${context.watch<TaskData>().taskCount} Tasks',
                   style: TextStyle(color: Colors.white, fontSize: 18.0),
                 ),
               ],
@@ -91,7 +86,6 @@ class TasksScreen extends StatelessWidget {
                 ),
               ),
               child: TasksList(
-                tasks: Provider.of<TaskData>(context).tasks,
                 callback: (checkboxState, index) {
                   context.read<TaskData>().markTaskAsDone(index);
                 },
