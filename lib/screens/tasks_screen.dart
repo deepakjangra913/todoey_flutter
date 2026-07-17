@@ -85,11 +85,7 @@ class TasksScreen extends StatelessWidget {
                   topLeft: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(
-                callback: (checkboxState, index) {
-                  context.read<TaskData>().markTaskAsDone(index);
-                },
-              ),
+              child: TasksList(),
             ),
           ),
         ],
