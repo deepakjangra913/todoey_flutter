@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/*
+* Design of specific tile of task
+* It's containing text along with checkbox
+* */
 class TaskTile extends StatelessWidget {
   final bool isChecked;
   late final String taskTitle;
