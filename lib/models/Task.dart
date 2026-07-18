@@ -1,3 +1,7 @@
+
+/*
+* Data class for Task View
+* */
 class Task {
   final String name;
   bool isDone;
